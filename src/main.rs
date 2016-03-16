@@ -40,7 +40,6 @@ fn main() {
 
     let stream = TcpStream::connect("127.0.0.1:25658").unwrap();
     let mut writestr = stream.try_clone().unwrap();
-    stream.set_read_timeout(Some(Duration::new(0, 100000))).unwrap();
 
     if args.cmd_register {
         let reg = ClientRequest::Reg(args.arg_username.clone(), args.arg_pass.clone());
@@ -88,11 +87,8 @@ fn main() {
                     }
                 }
                 Err(_) => {
-                    flag = true;
+                    ()
                 }
-            }
-            if flag {
-                thread::sleep(Duration::new(0, 300000));
             }
         }
     });
